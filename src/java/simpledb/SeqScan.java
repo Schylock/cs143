@@ -2,6 +2,7 @@ package simpledb;
 
 import java.util.*;
 
+
 /**
  * SeqScan is an implementation of a sequential scan access method that reads
  * each tuple of a table in no particular order (e.g., as they are laid out on
@@ -27,8 +28,17 @@ public class SeqScan implements DbIterator {
      *            are, but the resulting name can be null.fieldName,
      *            tableAlias.null, or null.null).
      */
+    
+    private int tableid;
+    private TransactionId transid;
+    private String tableAlias;
+    private HeapFileIter iter;
+    
     public SeqScan(TransactionId tid, int tableid, String tableAlias) {
         // some code goes here
+    	this.tableAlias = tableAlias;
+    	this.transid = tid;
+    	this.tableid = tableid;
     }
 
     /**
@@ -37,7 +47,7 @@ public class SeqScan implements DbIterator {
      *       be the actual name of the table in the catalog of the database
      * */
     public String getTableName() {
-        return null;
+        return Database.getCatalog().getTableName(tableid);
     }
     
     /**
@@ -46,7 +56,7 @@ public class SeqScan implements DbIterator {
     public String getAlias()
     {
         // some code goes here
-        return null;
+        return tableAlias;
     }
 
     /**
@@ -63,6 +73,8 @@ public class SeqScan implements DbIterator {
      */
     public void reset(int tableid, String tableAlias) {
         // some code goes here
+    	this.tableid = tableid;
+    	this.tableAlias = tableAlias;
     }
 
     public SeqScan(TransactionId tid, int tableid) {
@@ -71,6 +83,8 @@ public class SeqScan implements DbIterator {
 
     public void open() throws DbException, TransactionAbortedException {
         // some code goes here
+    	iter = new HeapFileIter(transid, tableid);
+    	iter.open();
     }
 
     /**
@@ -84,22 +98,30 @@ public class SeqScan implements DbIterator {
      */
     public TupleDesc getTupleDesc() {
         // some code goes here
-        return null;
+    	TupleDesc td = Database.getCatalog().getTupleDesc(tableid);
+    	Type[] types = new Type[td.numFields()];
+    	String[] names = new String[td.numFields()];
+    	for (int i = 0; i < td.numFields(); i++){
+    		types[i] = td.getFieldType(i);
+    		names[i] = tableAlias + td.getFieldName(i);
+    	}
+        return new TupleDesc(types, names);
     }
 
     public boolean hasNext() throws TransactionAbortedException, DbException {
         // some code goes here
-        return false;
+    	return iter.hasNext();
     }
 
     public Tuple next() throws NoSuchElementException,
             TransactionAbortedException, DbException {
         // some code goes here
-        return null;
+    	return iter.next();
     }
 
     public void close() {
         // some code goes here
+    	iter.close();
     }
 
     public void rewind() throws DbException, NoSuchElementException,
