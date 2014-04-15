@@ -79,7 +79,7 @@ public class HeapPage implements Page {
         
         // some code goes here
     	double tmp = (double) getNumTuples();
-        return (int) (tmp/8 + .5);
+        return (int) Math.ceil(tmp/8);
                  
     }
     
@@ -321,7 +321,7 @@ public class HeapPage implements Page {
     		if (isSlotUsed(i))
     			res.add(tuples[i]);
     	}
-        return res.iterator();
+        return res.listIterator();
     }
 
 }

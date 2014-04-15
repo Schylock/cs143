@@ -1,6 +1,7 @@
 package simpledb;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class HeapFileIter implements DbFileIterator {
@@ -8,7 +9,7 @@ public class HeapFileIter implements DbFileIterator {
 	
 	private int _tableid, _pgNo;
 	private TransactionId _transid;
-	private Iterator<Tuple> _tuples;
+	private ListIterator<Tuple> _tuples;
 	
 	public HeapFileIter(TransactionId transid, int tableid){
 		_tableid = tableid;
@@ -22,8 +23,7 @@ public class HeapFileIter implements DbFileIterator {
 		PageId pgId = new HeapPageId(_tableid, _pgNo);
     	HeapPage pg = (HeapPage)Database.getBufferPool().getPage(_transid, pgId, Permissions.READ_ONLY);
     	_pgNo++;
-    	_tuples = pg.iterator();
-		
+    	_tuples = (ListIterator<Tuple>) pg.iterator();
 	}
 
 	@Override
@@ -49,7 +49,8 @@ public class HeapFileIter implements DbFileIterator {
 	@Override
 	public void rewind() throws DbException, TransactionAbortedException {
 		// TODO Auto-generated method stub
-		
+		while(_tuples.hasPrevious())
+			_tuples.previous();
 	}
 
 	@Override
