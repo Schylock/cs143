@@ -93,6 +93,7 @@ public class Tuple implements Serializable {
      * where \t is any whitespace, except newline, and \n is a newline
      */
     public String toString() {
+    	//TODO
         // some code goes here
         throw new UnsupportedOperationException("Implement this");
     }
@@ -104,6 +105,7 @@ public class Tuple implements Serializable {
     public Iterator<Field> fields()
     {
         // some code goes here
+    	//TODO
         return null;
     }
     

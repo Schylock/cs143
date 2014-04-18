@@ -139,7 +139,6 @@ public class TupleDesc implements Serializable {
     	if (name == null)
     		throw new NoSuchElementException();
     	for (int i = 0; i < td_items.size(); i++){
-    		//System.out.println(getFieldName(i));
     		if (name.equals(getFieldName(i))){
     			return i;
     		}
@@ -196,6 +195,7 @@ public class TupleDesc implements Serializable {
      */
     public boolean equals(Object o) {
         // some code goes here
+    	//TODO
     	if (o == null || !(o instanceof TupleDesc)) 
     		return false;
     	TupleDesc td = (TupleDesc) o;
@@ -211,6 +211,7 @@ public class TupleDesc implements Serializable {
     public int hashCode() {
         // If you want to use TupleDesc as keys for HashMap, implement this so
         // that equal objects have equals hashCode() results
+    	//TODO
         throw new UnsupportedOperationException("unimplemented");
     }
 

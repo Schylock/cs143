@@ -59,5 +59,4 @@ public class HeapFileIter implements DbFileIterator {
 	public void close() {
 		_tuples = null;
 	}
-
 }
