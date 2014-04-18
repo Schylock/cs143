@@ -51,6 +51,8 @@ public class HeapFileIter implements DbFileIterator {
 		// TODO Auto-generated method stub
 		while(_tuples.hasPrevious())
 			_tuples.previous();
+		_pgNo = 0;
+		open();
 	}
 
 	@Override

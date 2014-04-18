@@ -75,24 +75,16 @@ public class HeapFile implements DbFile {
     	byte [] data = new byte[(int)Math.min(page_size, f.length() - page_size*pages.size())];
     	try {
 			RandomAccessFile raf = new RandomAccessFile(f, "r");
-			System.out.println("The size of the data array is " + data.length + " bytes");
-			float tmp = pages.size();
-			System.out.println("page.size() is: "+tmp);
-			System.out.println("The offset is set to: " + page_size*pages.size());
-			System.out.println("raf length: "+raf.length());
 			raf.skipBytes(page_size*pages.size());
 			raf.read(data);
 			raf.close();
-			System.out.println("Successfully read");
 			pages.add(new HeapPage((HeapPageId) pid, data));
-			System.out.println("pages' size updated to: " + pages.size());
 			return pages.get(pages.size() - 1);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	//read(data, BufferPool.getPageSize() * pages.size(), BufferPool.getPageSize());
         return null;
     }
 
