@@ -3,6 +3,7 @@ package simpledb;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Tuple maintains information about the contents of a tuple. Tuples have a
@@ -93,9 +94,14 @@ public class Tuple implements Serializable {
      * where \t is any whitespace, except newline, and \n is a newline
      */
     public String toString() {
-    	//TODO
         // some code goes here
-        throw new UnsupportedOperationException("Implement this");
+    	if (fields.length == 0) return "";
+    	String s = fields[0].toString();
+    	for (int i = 1; i < fields.length; i++){
+    		s += "\t" + fields[i];
+    	}
+    	return s + "\n";
+        //throw new UnsupportedOperationException("Implement this");
     }
     
     /**
@@ -105,8 +111,8 @@ public class Tuple implements Serializable {
     public Iterator<Field> fields()
     {
         // some code goes here
-    	//TODO
-        return null;
+    	List<Field> arrAsList = Arrays.asList(fields);
+    	return arrAsList.iterator();
     }
     
     /**
