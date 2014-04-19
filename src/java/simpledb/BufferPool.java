@@ -77,6 +77,8 @@ public class BufferPool {
         throws TransactionAbortedException, DbException {
         // some code goes here
     	if (!pages.containsKey(pid.hashCode())){
+    		if (pages.size() == DEFAULT_PAGES)
+    			throw new DbException("Page limit reached");
     		DbFile dbFile = Database.getCatalog().getDatabaseFile(pid.getTableId());
     		pages.put(pid.hashCode(), dbFile.readPage(pid));
     	}

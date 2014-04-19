@@ -49,8 +49,8 @@ public class HeapFileIter implements DbFileIterator {
 	@Override
 	public void rewind() throws DbException, TransactionAbortedException {
 		// TODO Auto-generated method stub
-		while(_tuples.hasPrevious())
-			_tuples.previous();
+		//while(_tuples.hasPrevious())
+			//_tuples.previous();
 		_pgNo = 0;
 		open();
 	}
