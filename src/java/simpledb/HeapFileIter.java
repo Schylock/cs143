@@ -58,5 +58,6 @@ public class HeapFileIter implements DbFileIterator {
 	@Override
 	public void close() {
 		_tuples = null;
+		this._pgNo = 0;
 	}
 }
